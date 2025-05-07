@@ -45,6 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers("/auth/register", "/auth/login","/auth/validate").permitAll()
+                                .requestMatchers("/test/**").authenticated()
                                 .anyRequest().authenticated()
                 )
                 // 3) Le dices a Spring que no cree sesión (JWT)
