@@ -1,4 +1,6 @@
 package com.auth.ms_auth.controller;
+import com.auth.ms_auth.dto.AuthRequest;
+import com.auth.ms_auth.dto.AuthResponse;
 import com.auth.ms_auth.dto.RegisterRequest;
 import com.auth.ms_auth.entity.User;
 import com.auth.ms_auth.service.AuthService;
@@ -24,4 +26,16 @@ public class AuthController {
         User saved = authService.register(req);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest req) {
+        AuthResponse resp = authService.login(req);
+        return ResponseEntity.ok(resp);
+    }
+    @GetMapping("/validate")
+    public ResponseEntity<User> validateToken(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        User usuario = authService.validateToken(token);
+        return ResponseEntity.ok(usuario);
+    }
+
 }
